@@ -16,10 +16,22 @@ app.post("/users", async (req, res) => {
   }
 });
 
+app.get("/users", async (req, res) => {
+  try {
+    
+    let users = await User.findAll()
+  
+    return res.status(200).json(users)
+  } catch (error) {
+      console.log(error)
+      return res.status(500).json("Something went wrong")
+  }
+})
+
 app.listen({ port: 5000 }, async () => {
   console.log("running on port 5000");
-  await sequelize.sync({ force: true });
-  console.log("database synced");
+  await sequelize.authenticate();
+  console.log("database connected");
 });
 async function main() {}
 
